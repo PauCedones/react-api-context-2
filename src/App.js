@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
+import Bio from "./components/Bio";
+import Projects from "./components/Projects";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
+  const [gitHubData, setGitHubData] = useState({});
+  const [reposData, setReposData] = useState([]);
+  useEffect(() => {
+    const gitHubData = fetchData(
+      "http://api.github.com/users/paucedones",
+      setGitHubData
+    );
+    const reposData = fetchData(
+      "http://api.github.com/users/paucedones/repos",
+      setReposData
+    );
+
+    console.log(gitHubData, reposData);
+  }, []);
+
+  async function fetchData(url, setter) {
+    const getData = await fetch(url);
+    const json = await getData.json();
+
+    setter(json);
+  }
+  const contextData = {
+    info: gitHubData,
+    repos: reposData,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider value={contextData}>
+      <Navbar />
+      <Bio />
+      <Projects />
+    </UserProvider>
   );
 }
 
