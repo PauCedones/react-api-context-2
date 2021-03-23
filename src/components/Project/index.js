@@ -1,10 +1,12 @@
 import React from "react";
 
 function Project(props) {
-  const { name, description } = props.data;
+  const { name, description, html_url } = props.data;
   return (
     <li>
-      {name} - {description}
+      <h2>{name}</h2>
+      <p>{description}</p>
+      <a href={html_url}>Link</a>
     </li>
   );
 }

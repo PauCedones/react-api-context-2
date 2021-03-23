@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+import styled from "styled-components";
+import UserContext from "../../context/UserContext";
+
+const AvatarStyled = styled.main`
+  .avatar {
+    margin-top: 50px;
+    border-radius: 25px;
+    width: 150px;
+  }
+`;
 
 function Avatar() {
-  return <p>avatar</p>;
+  const { info } = useContext(UserContext);
+  return (
+    <AvatarStyled>
+      <img className="avatar" src={info.avatar_url} alt={info.name} />
+    </AvatarStyled>
+  );
 }
 
 export default Avatar;

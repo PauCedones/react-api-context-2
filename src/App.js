@@ -2,7 +2,16 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Bio from "./components/Bio";
 import Projects from "./components/Projects";
+import Avatar from "./components/Avatar";
+import styled from "styled-components";
 import { UserProvider } from "./context/UserContext";
+
+const AppStyled = styled.main`
+  background: aquamarine;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 function App() {
   const [gitHubData, setGitHubData] = useState({});
@@ -33,9 +42,12 @@ function App() {
 
   return (
     <UserProvider value={contextData}>
-      <Navbar />
-      <Bio />
-      <Projects />
+      <AppStyled>
+        <Avatar />
+        <Navbar />
+        <Bio />
+        <Projects />
+      </AppStyled>
     </UserProvider>
   );
 }
